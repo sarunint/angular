@@ -206,6 +206,9 @@ export class Esm2015ReflectionHost extends TypeScriptReflectionHost implements N
     if (ts.isVariableDeclaration(declaration) && declaration.initializer) {
       declaration = declaration.initializer;
     }
+    while (ts.isBinaryExpression(declaration) && declaration.right) {
+      declaration = declaration.right;
+    }
     if (ts.isClassExpression(declaration)) {
       return declaration.name && this.checker.getSymbolAtLocation(declaration.name);
     }
